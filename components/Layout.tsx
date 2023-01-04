@@ -3,8 +3,8 @@ import Link from "next/link";
 import { ReactNode } from "react";
 
 type LayoutProps = {
-  title: string;
-  children: ReactNode;
+  title?: string;
+  children?: ReactNode;
 };
 
 const Layout = ({ title, children }: LayoutProps) => {
