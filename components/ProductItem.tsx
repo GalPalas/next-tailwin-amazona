@@ -2,12 +2,12 @@ import Link from "next/link";
 import React from "react";
 
 type Product = {
-  name?: string;
+  name: string;
   slug: string;
   category?: string;
   image: string;
-  price?: number;
-  brand?: string;
+  price: number;
+  brand: string;
   rating?: number;
   numReviews?: number;
   countInStock?: number;
