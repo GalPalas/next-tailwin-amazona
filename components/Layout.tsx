@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
-import { ReactNode } from "react";
+import { ReactNode, useContext } from "react";
+import { Store } from "../utils/Store";
 
 type LayoutProps = {
   title?: string;
@@ -8,6 +9,7 @@ type LayoutProps = {
 };
 
 const Layout = ({ title, children }: LayoutProps) => {
+  const { state, dispatch }: any = useContext(Store);
   return (
     <div>
       <Head>
@@ -25,7 +27,16 @@ const Layout = ({ title, children }: LayoutProps) => {
             </Link>
             <div className="space-x-3">
               <Link href="/cart" className="text-lg ">
-                Cart
+                Cart{" "}
+                {state.cart.cartItems.length > 0 && (
+                  <span className="bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full">
+                    {state.cart.cartItems.reduce(
+                      (quantity: number, item: { quantity: number }) =>
+                        item.quantity + quantity,
+                      0
+                    )}
+                  </span>
+                )}
               </Link>
               <Link href="/login" className="text-lg ">
                 Login
