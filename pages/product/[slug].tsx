@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useContext } from "react";
+import { useContext } from "react";
+import { Store } from "../../utils/Store";
 import Layout from "../../components/Layout";
 import data from "../../utils/data";
-import { Store } from "../../utils/Store";
 
 type Product = {
   name: string;
@@ -22,9 +22,11 @@ type Product = {
 };
 
 const ProductScreen = () => {
-  const { state, dispatch }: any = useContext(Store);
+  const router = useRouter();
   const { query } = useRouter();
   const { slug } = query;
+  const { state, dispatch }: any = useContext(Store);
+
   const product = data.products.find((p) => p.slug === slug);
   if (!product) return <div>Product Not Found</div>;
 
@@ -37,7 +39,9 @@ const ProductScreen = () => {
       alert("Sorry, This product is out of stock");
       return;
     }
+
     dispatch({ type: "CART_ADD_ITEM", payload: { ...product, quantity } });
+    router.push("/cart");
   };
 
   return (
