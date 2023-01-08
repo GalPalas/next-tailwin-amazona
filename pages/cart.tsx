@@ -5,6 +5,7 @@ import { XCircleIcon } from "@heroicons/react/outline";
 import Layout from "../components/Layout";
 import Link from "next/link";
 import Image from "next/image";
+import _ from "lodash";
 
 const Cart = () => {
   const router = useRouter();
@@ -12,6 +13,11 @@ const Cart = () => {
 
   const removeItemHandler = (item: any) => {
     dispatch({ type: "CART_REMOVE_ITEM", payload: item });
+  };
+
+  const updateCartHandler = (item: any, qty: any) => {
+    const quantity = Number(qty);
+    dispatch({ type: "CART_ADD_ITEM", payload: { ...item, quantity } });
   };
 
   return (
@@ -53,7 +59,21 @@ const Cart = () => {
                         &nbsp;{item.name}
                       </Link>
                     </td>
-                    <td className="p-5 text-right">{item.quantity}</td>
+                    <td className="p-5 text-right">
+                      <select
+                        className="border-2 rounded-md px-1"
+                        value={item.quantity}
+                        onChange={(e) =>
+                          updateCartHandler(item, e.target.value)
+                        }
+                      >
+                        {_.range(item.countInStock).map((x: any) => (
+                          <option key={x + 1} value={x + 1}>
+                            {x + 1}
+                          </option>
+                        ))}
+                      </select>
+                    </td>
                     <td className="p-5 text-right">{item.price}</td>
                     <td className="p-5 text-center">
                       <button onClick={() => removeItemHandler(item)}>
