@@ -6,6 +6,7 @@ import Layout from "../components/Layout";
 import Link from "next/link";
 import Image from "next/image";
 import _ from "lodash";
+import dynamic from "next/dynamic";
 
 const Cart = () => {
   const router = useRouter();
@@ -118,4 +119,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default dynamic(() => Promise.resolve(Cart), { ssr: false });
